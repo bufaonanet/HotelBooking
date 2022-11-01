@@ -18,6 +18,9 @@ public class Booking
     private Status _status;
     public Status CurrentStatus { get => _status; }
 
+    public Guest Guest { get; set; }
+    public Room Room { get; set; }
+
     public void ChangeState(Action action)
     {
         _status = (_status, action) switch
