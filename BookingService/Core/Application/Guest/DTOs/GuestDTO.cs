@@ -1,5 +1,4 @@
-﻿
-namespace Application.Guest.DTOs;
+﻿namespace Application.Guest.DTOs;
 using Guest = Domain.Entities.Guest;
 
 public class GuestDTO
@@ -11,7 +10,7 @@ public class GuestDTO
     public string IdNumber { get; set; }
     public int IdTypeCode { get; set; }
 
-    public Guest MapToEntity()
+    public Guest DtoToEntity()
     {
         return new Guest
         {
