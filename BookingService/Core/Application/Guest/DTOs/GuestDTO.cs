@@ -10,7 +10,7 @@ public class GuestDTO
     public string IdNumber { get; set; }
     public int IdTypeCode { get; set; }
 
-    public Guest DtoToEntity()
+    public Guest MapToEntity()
     {
         return new Guest
         {
@@ -23,6 +23,19 @@ public class GuestDTO
                 IdNumber = this.IdNumber,
                 DocumentType = (Domain.Enums.DocumentType)this.IdTypeCode
             }
+        };
+    }
+
+    public  static GuestDTO MapToDto(Guest guest)
+    {
+        return new GuestDTO
+        {
+            Id = guest.Id,
+            Email = guest.Email,
+            IdNumber = guest.DocumentId.IdNumber,
+            IdTypeCode = (int)guest.DocumentId.DocumentType,
+            Name = guest.Name,
+            Surname = guest.Surname,
         };
     }
 }

@@ -60,4 +60,14 @@ public class GuestsController : ControllerBase
         _logger.LogError("Response with unkonw ErrorCode Returned", res);
         return BadRequest(StatusCodes.Status500InternalServerError);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<GuestDTO>> Get(int guestId)
+    {
+        var res = await _guestManager.GetGuest(guestId);
+
+        if (res.Success) return Ok(res.Data);
+
+        return NotFound(res);
+    }
 }

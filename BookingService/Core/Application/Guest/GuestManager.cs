@@ -1,4 +1,5 @@
-﻿using Application.Guest.Ports;
+﻿using Application.Guest.DTOs;
+using Application.Guest.Ports;
 using Application.Guest.Requests;
 using Application.Guest.Responses;
 using Domain.Exceptions;
@@ -19,7 +20,7 @@ public class GuestManager : IGuestManager
     {
         try
         {
-            var guest = request.Data.DtoToEntity();
+            var guest = request.Data.MapToEntity();
             await guest.Save(_guestRepository);
 
             request.Data.Id = guest.Id;
@@ -69,8 +70,24 @@ public class GuestManager : IGuestManager
         }
     }
 
-    public Task<GuestResponse> GetGuest(int guestId)
+    public async Task<GuestResponse> GetGuest(int guestId)
     {
-        throw new NotImplementedException();
+        var guest = await _guestRepository.GetAsync(guestId);
+
+        if(guest is null)
+        {
+            return new GuestResponse
+            {
+                Success = false,
+                ErrorCode = ErrorCodes.GUEST_NOT_FOUND,
+                Message = "No Guest record was found with the given Id"
+            };
+        }
+
+        return new GuestResponse
+        {
+            Data = GuestDTO.MapToDto(guest),
+            Success = true,
+        };
     }
 }
