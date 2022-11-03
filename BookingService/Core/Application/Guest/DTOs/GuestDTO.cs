@@ -1,5 +1,8 @@
 ﻿namespace Application.Guest.DTOs;
-using Guest = Domain.Entities.Guest;
+
+using Domain.Guest.Enums;
+using Domain.Guest.ValueObjects;
+using Guest = Domain.Guest.Entities.Guest;
 
 public class GuestDTO
 {
@@ -18,10 +21,10 @@ public class GuestDTO
             Name = this.Name,
             Surname = this.Surname,
             Email = this.Email,
-            DocumentId = new Domain.ValueObjects.PersonId
+            DocumentId = new PersonId
             {
                 IdNumber = this.IdNumber,
-                DocumentType = (Domain.Enums.DocumentType)this.IdTypeCode
+                DocumentType = (DocumentType)this.IdTypeCode
             }
         };
     }

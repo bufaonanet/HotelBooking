@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Data.Room;
 
-public class RoomConfiguration : IEntityTypeConfiguration<Domain.Entities.Room>
+public class RoomConfiguration : IEntityTypeConfiguration<Domain.Room.Entities.Room>
 {
-    public void Configure(EntityTypeBuilder<Domain.Entities.Room> builder)
+    public void Configure(EntityTypeBuilder<Domain.Room.Entities.Room> builder)
     {
         builder.HasKey(x => x.Id);
 

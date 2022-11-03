@@ -1,8 +1,12 @@
 using Application.Guest;
 using Application.Guest.Ports;
+using Application.Room.Ports;
+using Application.Room;
 using Data;
 using Data.Guest;
-using Domain.Ports;
+using Data.Room;
+using Domain.Guest.Ports;
+using Domain.Room.Ports;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +24,8 @@ builder.Services.AddDbContext<HotelDbContext>(options =>
 #region Ioc
 builder.Services.AddScoped<IGuestManager, GuestManager>();
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+builder.Services.AddScoped<IRoomManager, RoomManager>();
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 #endregion
 
 builder.Services.AddEndpointsApiExplorer();

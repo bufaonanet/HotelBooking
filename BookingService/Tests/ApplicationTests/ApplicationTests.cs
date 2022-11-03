@@ -2,7 +2,9 @@ using Application.Guest;
 using Application.Guest.DTOs;
 using Application.Guest.Ports;
 using Application.Guest.Requests;
-using Domain.Ports;
+using Domain.Guest.Enums;
+using Domain.Guest.Ports;
+using Domain.Guest.ValueObjects;
 using Moq;
 
 namespace Application;
@@ -32,7 +34,7 @@ public class ApplicationTests
         };
 
         var fakeRepo = new Mock<IGuestRepository>();
-        fakeRepo.Setup(x => x.CreateAsync(It.IsAny<Domain.Entities.Guest>()))
+        fakeRepo.Setup(x => x.CreateAsync(It.IsAny<Domain.Guest.Entities.Guest>()))
             .Returns(Task.FromResult(expectedId));
 
         _sut = new GuestManager(fakeRepo.Object);
@@ -73,7 +75,7 @@ public class ApplicationTests
         var fakeRepo = new Mock<IGuestRepository>();
 
         fakeRepo.Setup(x => x.CreateAsync(
-            It.IsAny<Domain.Entities.Guest>())).Returns(Task.FromResult(222));
+            It.IsAny<Domain.Guest.Entities.Guest>())).Returns(Task.FromResult(222));
 
         _sut = new GuestManager(fakeRepo.Object);
 
@@ -113,7 +115,7 @@ public class ApplicationTests
         var fakeRepo = new Mock<IGuestRepository>();
 
         fakeRepo
-            .Setup(x => x.CreateAsync(It.IsAny<Domain.Entities.Guest>()))
+            .Setup(x => x.CreateAsync(It.IsAny<Domain.Guest.Entities.Guest>()))
             .Returns(Task.FromResult(222));
 
         _sut = new GuestManager(fakeRepo.Object);
@@ -133,7 +135,7 @@ public class ApplicationTests
 
         fakeRepo
             .Setup(x => x.GetAsync(333))
-            .Returns(Task.FromResult<Domain.Entities.Guest>(null));
+            .Returns(Task.FromResult<Domain.Guest.Entities.Guest>(null));
 
         _sut = new GuestManager(fakeRepo.Object);
 
@@ -150,13 +152,13 @@ public class ApplicationTests
     {
         var fakeRepo = new Mock<IGuestRepository>();
 
-        var fakeGuest = new Domain.Entities.Guest
+        var fakeGuest = new Domain.Guest.Entities.Guest
         {
             Id = 333,
             Name = "Test",
-            DocumentId = new Domain.ValueObjects.PersonId
+            DocumentId = new PersonId
             {
-                DocumentType = Domain.Enums.DocumentType.DriveLicence,
+                DocumentType = DocumentType.DriveLicence,
                 IdNumber = "123"
             }
         };

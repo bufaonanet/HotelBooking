@@ -1,8 +1,9 @@
-﻿using Domain.Exceptions;
-using Domain.Ports;
-using Domain.ValueObjects;
+﻿
+using Domain.Guest.Exceptions;
+using Domain.Guest.Ports;
+using Domain.Guest.ValueObjects;
 
-namespace Domain.Entities;
+namespace Domain.Guest.Entities;
 
 public class Guest
 {
@@ -29,7 +30,7 @@ public class Guest
             throw new MissingRequiredInformation();
         }
 
-        if (Utils.ValidateEmail(this.Email) == false)
+        if (Utils.ValidateEmail(Email) == false)
         {
             throw new InvalidEmailException();
         }
