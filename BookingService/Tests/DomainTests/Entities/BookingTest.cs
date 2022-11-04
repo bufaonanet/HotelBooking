@@ -1,6 +1,6 @@
 using Domain.Booking.Entities;
-using Domain.Guest.Enums;
-using Action = Domain.Guest.Enums.Action;
+using Domain.Booking.Enums;
+using Action = Domain.Booking.Enums.Action;
 
 namespace DomainTests.Entities
 {

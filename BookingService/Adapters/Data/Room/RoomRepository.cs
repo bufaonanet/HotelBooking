@@ -23,6 +23,7 @@ public class RoomRepository : IRoomRepository
     {
         return await _hotelDbContext.Rooms
                .Where(g => g.Id == Id)
+               .Include(g => g.Bookings)
                .FirstAsync();
     }
 }

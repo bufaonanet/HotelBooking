@@ -8,12 +8,20 @@ using Data.Room;
 using Domain.Guest.Ports;
 using Domain.Room.Ports;
 using Microsoft.EntityFrameworkCore;
+using Application.Booking.Ports;
+using Application.Booking;
+using Data.Booking;
+using Domain.Booking.Ports;
+using Application.Payment.Ports;
+using System.Text.Json.Serialization;
+using Payment.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 #region Db Config
 var connectionString = builder.Configuration.GetConnectionString("Main");
@@ -26,6 +34,9 @@ builder.Services.AddScoped<IGuestManager, GuestManager>();
 builder.Services.AddScoped<IGuestRepository, GuestRepository>();
 builder.Services.AddScoped<IRoomManager, RoomManager>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IBookingManager, BookingManager>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IPaymentProcessorFactory, PaymentProcessorFactory>();
 #endregion
 
 builder.Services.AddEndpointsApiExplorer();

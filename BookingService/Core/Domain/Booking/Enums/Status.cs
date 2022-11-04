@@ -1,4 +1,4 @@
-﻿namespace Domain.Guest.Enums;
+﻿namespace Domain.Booking.Enums;
 
 public enum Status
 {

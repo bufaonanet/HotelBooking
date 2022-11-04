@@ -1,5 +1,7 @@
-﻿using Domain.Guest.Enums;
-using Action = Domain.Guest.Enums.Action;
+﻿using Domain.Booking.Enums;
+using Domain.Booking.Exceptions;
+using Domain.Booking.Ports;
+using Action = Domain.Booking.Enums.Action;
 
 namespace Domain.Booking.Entities;
 
@@ -32,5 +34,68 @@ public class Booking
             (Status.Canceled, Action.Reopen) => Status.Created,
             _ => _status
         };
+    }
+
+    public bool IsValid()
+    {
+        try
+        {
+            ValidateState();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    private void ValidateState()
+    {
+        if (PlacedAt == default)
+        {
+            throw new PlacedAtIsARequiredInformationException();
+        }
+
+        if (Start == default(DateTime))
+        {
+            throw new StartDateTimeIsRequiredException();
+        }
+
+        if (End == default(DateTime))
+        {
+            throw new EndDateTimeIsRequiredException();
+        }
+
+        if (Room == null)
+        {
+            throw new RoomIsRequiredException();
+        }
+
+        if (Guest == null)
+        {
+            throw new GuestIsRequiredException();
+        }
+    }
+
+    public async Task Save(IBookingRepository bookingRepository)
+    {
+        ValidateState();
+
+        Guest.IsValid();
+
+        if (!Room.CanBeBooked())
+        {
+            throw new RoomCannotBeBookedException();
+        };
+
+        if (Id == 0)
+        {
+            var resp = await bookingRepository.CreateBookingAsync(this);
+            Id = resp.Id;
+        }
+        else
+        {
+
+        }
     }
 }
